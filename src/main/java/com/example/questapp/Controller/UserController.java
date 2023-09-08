@@ -40,17 +40,6 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public User updateUser(@PathVariable Long userId,@RequestBody User newUser){
-        Optional<User> user = userService.getOneUser(userId);
-        if(user.isPresent()){
-            User foundUser = user.get();
-            foundUser.setUser_name(newUser.getUser_name());
-            foundUser.setPassword(newUser.getPassword());
-            userService.saveUser(foundUser);
-            return  foundUser;
-
-        }else{
-            return  null;
-
-        }
+       return  userService.updateUser(userId,newUser);
     }
 }

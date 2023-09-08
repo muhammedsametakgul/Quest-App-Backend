@@ -22,8 +22,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getOneUser(Long id){
-        return userRepository.findById(id);
+    public User getOneUser(Long id){
+        return userRepository.findById(id).orElse(null);
     }
 
 
@@ -36,4 +36,18 @@ public class UserService {
 
    userRepository.deleteById(id);
     }
+
+
+    public User updateUser(Long id, User newUser){
+        Optional<User> user = Optional.ofNullable(getOneUser(id));
+        if(user.isPresent()){
+            User foundUser = user.get();
+            foundUser.setUser_name(newUser.getUser_name());
+            foundUser.setPassword(newUser.getPassword());
+            saveUser(foundUser);
+            return  foundUser;
+
+        }else{
+            return  null;
+    }}
 }
