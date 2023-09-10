@@ -30,8 +30,12 @@ public class CommentService {
 
 
 
-    public List<Comment> getAllCommentByPostId(Long id){
-        return commentRepository.findByPostId(id);
+    public List<Comment> getAllCommentByPostId(Optional<Long> postid){
+        if(postid.isPresent()){
+            return  commentRepository.findByPostId(postid.get());
+        }else{
+            return  commentRepository.findAll();
+        }
     }
 
     public Comment saveOneComment(CommentRequest commentRequest){
@@ -49,4 +53,18 @@ public class CommentService {
         }
     }
 
+    public Comment updateComment(Long commentId, CommentRequest commentRequest){
+    Optional<Comment> comment=commentRepository.findById(commentId);
+    if(comment.isPresent()){
+        Comment comment1= comment.get();
+        comment1.setText(commentRequest.getText());
+        commentRepository.save(comment1);
+        return  comment1;
+    }
+    return null;
+    }
+
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
 }

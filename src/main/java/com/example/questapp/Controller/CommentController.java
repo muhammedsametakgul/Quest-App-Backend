@@ -7,6 +7,7 @@ import com.example.questapp.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/comment")
@@ -19,9 +20,11 @@ public class CommentController {
         this.commentService=commentService;
     }
 
-    @GetMapping("/{postId}")
-    public List<Comment>  getAllCommentsByPostId(@PathVariable Long postId){
+    @GetMapping
+    public List<Comment>  getAllCommentsByPostId(@RequestParam("postid") Optional<Long> postId){
         return  commentService.getAllCommentByPostId(postId);
+
+        // /comment?postid=1
     }
 
 
@@ -29,6 +32,16 @@ public class CommentController {
     public void saveComment(@RequestBody CommentRequest commentRequest){
         commentService.saveOneComment(commentRequest);
 
+    }
+
+    @PutMapping("/{commentId}")
+    public Comment updateComment(@PathVariable Long commentId,@RequestBody CommentRequest commentRequest){
+        return  commentService.updateComment(commentId,commentRequest);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable Long commentId){
+          commentService.deleteComment(commentId);
     }
 
 
