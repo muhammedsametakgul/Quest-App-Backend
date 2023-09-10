@@ -20,3 +20,23 @@ Database Schema <br><br>
    * Restful API
 
 
+# Function URL
+
+<h2>User</h2>
+/user -> getAllUser()
+
+/user/{userid} -> deleteUser() and updateUser()
+
+
+<h2>Post</h2>
+/post -> getAllPost() and savePost() <br>
+
+/post?userid=id -> getAllPost(Based on User ID) <br>
+/post/{post} -> getOnePost()
+
+
+<h2>Comment</h2>
+/comment?postid=id -> getAllCommentsByPostId()
+
+/comment -> saveComment() <br>
+/comment/{commentid} -> deleteComment() and updateComment()
